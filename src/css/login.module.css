@@ -11,3 +11,7 @@
 .wp100 {
   width: 100%;
 }
+
+.carts .ant-card-body {
+  padding-top: 8px;
+}

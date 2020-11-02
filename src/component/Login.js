@@ -1,6 +1,6 @@
 import { Card, Form, Input,Checkbox, Button } from 'antd';
 import styles from '../css/login.module.css';
-
+import api from '../api/index.js';
 
 const layout = {
   labelCol: { span: 7 },
@@ -12,6 +12,7 @@ const tailLayout = {
 
 function Login() {
   const onFinish = values => {
+    api.post();
     console.log('Success:', values);
   };
 

@@ -28,7 +28,6 @@ function App() {
               />
             </Space>
           </Row>
-
           <Row justify="space-between" style={{ marginBottom: '16px' }}>
             <Col>
               <Card

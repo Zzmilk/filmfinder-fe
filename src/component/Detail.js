@@ -24,7 +24,7 @@ function Detail() {
           <img src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" alt="" style={{ width: '100%', height: '100%' }}/>
         </Col>
         <Col span={19}>
-          <Descriptions title="File Detail" column={1} bordered>
+          <Descriptions title="Film Detail" column={1} bordered>
             <Descriptions.Item label="Film Name">The Dark Knight</Descriptions.Item>
             <Descriptions.Item label="Director">Christopher Nolan</Descriptions.Item>
             <Descriptions.Item label="Genre">Action Crime, Drama</Descriptions.Item>

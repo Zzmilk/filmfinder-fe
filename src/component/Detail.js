@@ -18,12 +18,12 @@ const Editor = ({ onChange, onSubmit, submitting, value }) => (
 
 function Detail() {
   return <>
-    <div style={{ width: '1024px', margin: '0 auto' }}>
+    <div style={{ width: '1024px', margin: '0 auto', marginTop: '20px' }}>
       <Row>
-        <Col span={5} flex>
+        <Col span={7} flex>
           <img src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" alt="" style={{ width: '100%', height: '100%' }}/>
         </Col>
-        <Col span={19}>
+        <Col span={17}>
           <Descriptions title="Film Detail" column={1} bordered>
             <Descriptions.Item label="Film Name">The Dark Knight</Descriptions.Item>
             <Descriptions.Item label="Director">Christopher Nolan</Descriptions.Item>

@@ -1,4 +1,4 @@
-import { Card, Form, Input,Checkbox, Button } from 'antd';
+import { Card, Form, Input,message, Button } from 'antd';
 import styles from '../css/login.module.css';
 import api from '../api/index.js';
 
@@ -10,14 +10,20 @@ const tailLayout = {
   wrapperCol: {  span: 32 },
 };
 
-function Login() {
+function Login(props) {
   const onFinish = values => {
-    api.post();
-    console.log('Success:', values);
-  };
-
-  const onFinishFailed = errorInfo => {
-    console.log('Failed:', errorInfo);
+    api.post('/login/', values)
+      .then(({ data }) => {
+        console.log(data);
+        if (data.success) {
+          props.history.push('/');
+        } else {
+          message.error(data.msg);
+        }
+      })
+      .catch((e) => {
+        console.log('Success:', values);
+      });
   };
 
   return (
@@ -26,13 +32,13 @@ function Login() {
         <Form
           {...layout}
           name="basic"
-          initialValues={{ remember: true }}
+          initialValues={{ name: '',  password: '' }}
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
         >
           <Form.Item
             label="Username"
-            name="username"
+            name="name"
             rules={[{ required: true, message: 'Please input your username!' }]}
           >
             <Input />

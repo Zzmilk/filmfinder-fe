@@ -20,18 +20,17 @@ function getSlicedArr(arr, len = 5) {
     movies.push(arr);
   }
 
-  console.log(movies);
   return movies
 }
 
-function genRows(allRowData, desc, setValue, value) {
+function genRows(allRowData, props, desc, setValue, value) {
   return allRowData.map((singleRow) => {
     return <>
       <Row key={singleRow} justify="space-between" style={{ marginBottom: '16px' }} className="main-list">
         {
           singleRow.map(({ name, poster, mid }) => {
             return (
-              <Col key={mid}>
+              <Col key={mid} onClick={() => props.history.push('/detail')}>
                 <Card
                   hoverable
                   className={styles.wd}
@@ -51,7 +50,7 @@ function genRows(allRowData, desc, setValue, value) {
   });
 }
 
-function App() {
+function App(props) {
   const onSearch = value => console.log(value);
   const desc = useMemo(() => ['terrible', 'bad', 'normal', 'good', 'wonderful'], []);
   const [value, setValue] = useState(4);
@@ -87,7 +86,7 @@ function App() {
               />
             </Space>
           </Row>
-          { genRows(getSlicedArr(moves), desc, setValue, value) }
+          { genRows(getSlicedArr(moves), props, desc, setValue, value) }
         </Content>
         <Footer style={{ textAlign: 'center' }}>FilmFinder ©2020 Created by Zzmilk</Footer>
       </Layout>

@@ -1,4 +1,4 @@
-import { Layout, Input, Space, Card, Row, Col, Rate, Pagination, message } from "antd";
+import { Layout, Input, Space, Card, Row, Col, Rate, Button, message } from "antd";
 import { useState, useMemo } from 'react';
 import styles from './app.module.css';
 import { useEffect } from "react";
@@ -21,6 +21,20 @@ function getSlicedArr(arr, len = 5) {
   }
 
   return movies
+}
+
+function logout(props) {
+  api.get('/logout/')
+    .then(({ data }) => {
+      if (data.success) {
+        props.history.push('/login');
+      } else {
+        message.error(data.msg);
+      }
+    })
+    .catch((e) => {
+      console.log(e);
+    })
 }
 
 function genRows(allRowData, props, desc, setValue, value) {
@@ -73,11 +87,12 @@ function App(props) {
 
   return (
     <>
-      <Layout>
+      <Layout style={{ minWidth: '1590px', }}>
         <Header>
           <Row justify="end">
             <Space>
-
+              <Button type="link" onClick={() => props.history.push('/login')}>Login</Button>
+              <Button type="link" onClick={() => logout(props)}>Logout</Button>
             </Space>
           </Row>
         </Header>

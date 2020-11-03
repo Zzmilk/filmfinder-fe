@@ -34,7 +34,6 @@ function Login(props) {
           name="basic"
           initialValues={{ name: '',  password: '' }}
           onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
         >
           <Form.Item
             label="Username"

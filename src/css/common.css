@@ -1,0 +1,8 @@
+.main-list .ant-card-meta-title {
+  word-break: break-all;
+  white-space: normal;
+}
+
+.main-list .ant-card-body {
+  padding-top: 10px;
+}

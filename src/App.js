@@ -44,7 +44,7 @@ function genRows(allRowData, props, desc) {
       {
         singleRow.map(({ name, poster, mid, average_rating, rating }) => {
           return (
-            <Col key={mid} onClick={() => props.history.push('/detail')}>
+            <Col key={mid} onClick={() => props.history.push('/detail/' + mid)}>
               <Card
                 hoverable
                 className={styles.wd}

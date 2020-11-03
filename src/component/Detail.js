@@ -1,7 +1,9 @@
-import React from 'react';
-import { Descriptions, Row, Col, Comment, Button, Avatar, Card, Form, Input } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Descriptions, Row, Col, Comment, Button, Avatar, Card, Form, Input, message, Tooltip } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
+import moment from 'moment';
 import styles from "../app.module.css";
+import api from '../api';
 
 const Editor = ({ onChange, onSubmit, submitting, value }) => (
   <>
@@ -16,20 +18,37 @@ const Editor = ({ onChange, onSubmit, submitting, value }) => (
   </>
 );
 
-function Detail() {
+function Detail(props) {
+  const [detail, setDetail] = useState({});
+
+  useEffect(() => {
+    api
+      .get('/movies/detail/', { params: { movie_id: props.match.params.mid } })
+      .then(({ data }) => {
+        if (data.success) {
+          setDetail(data.movie[0]);
+        } else {
+          message.error(data.msg);
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      })
+  }, []);
+
   return <>
     <div style={{ width: '1024px', margin: '0 auto', marginTop: '20px' }}>
       <Row>
         <Col span={7} flex>
-          <img src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" alt="" style={{ width: '100%', height: '100%' }}/>
+          <img src={detail.poster} alt="" style={{ width: '100%', height: '100%' }}/>
         </Col>
         <Col span={17}>
           <Descriptions title="Film Detail" column={1} bordered>
-            <Descriptions.Item label="Film Name">The Dark Knight</Descriptions.Item>
-            <Descriptions.Item label="Director">Christopher Nolan</Descriptions.Item>
-            <Descriptions.Item label="Genre">Action Crime, Drama</Descriptions.Item>
-            <Descriptions.Item label="Cast">Christion Bale, Heath Ledger, Aaron Eckhart</Descriptions.Item>
-            <Descriptions.Item label="Average Rating">4.6</Descriptions.Item>
+            <Descriptions.Item label="Film Name">{ detail.name }</Descriptions.Item>
+            <Descriptions.Item label="Director">{ detail.director }</Descriptions.Item>
+            <Descriptions.Item label="Genre">{ (detail.genre || []).join(' , ') }</Descriptions.Item>
+            <Descriptions.Item label="Cast">{ (detail.cast || []).join(' , ') }</Descriptions.Item>
+            <Descriptions.Item label="Average Rating">{ detail.average_rating }</Descriptions.Item>
             <Descriptions.Item label="">
               <Button type="primary">Add to Wishlist</Button>
             </Descriptions.Item>
@@ -42,15 +61,7 @@ function Detail() {
           <h1>Description</h1>
         </Col>
         <Col>
-          <p>
-            Set witthin a year after the events of Batman Beqins (2005] Bgtman, L ieutenant
-            James Gordon, and new District Attorney Harvey Dent successfully beain to
-            round up the criminals that plaque Gotham City, until a mysterious chd sddistic
-            criminal" mastermind known only as‘The Joker" oppears in Gotham, creatinq a new
-            wave of chaos. Batman's struqgle oqpinst The Joker becomes deeply personal.
-            Forcinq him to "confront ever Ything'he believes' and improve his technidlogy to
-            stop him A love trionale develobs between Bruce Wavre, Dent, and Rachef
-          </p>
+          <p>{ detail.description }</p>
         </Col>
       </Row>
 
@@ -58,96 +69,28 @@ function Detail() {
         <Col span={24}>
           <h1>Reviews</h1>
         </Col>
-        <Col>
-          <Comment
-            author={<a>Han Solo</a>}
-            avatar={
-              <Avatar style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
-            }
-            content={
-              <p>
-                We supply a series of design principles, practical patterns and high quality design
-                resources (Sketch and Axure), to help people create their product prototypes beautifully
-                and efficiently.
-              </p>
-            }
-          />
-        </Col>
-        <Col>
-          <Comment
-            author={<a>Han Solo</a>}
-            avatar={
-              <Avatar style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
-            }
-            content={
-              <p>
-                We supply a series of design principles, practical patterns and high quality design
-                resources (Sketch and Axure), to help people create their product prototypes beautifully
-                and efficiently.
-              </p>
-            }
-          />
-        </Col>
-        <Col>
-          <Comment
-            author={<a>Han Solo</a>}
-            avatar={
-              <Avatar style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
-            }
-            content={
-              <p>
-                We supply a series of design principles, practical patterns and high quality design
-                resources (Sketch and Axure), to help people create their product prototypes beautifully
-                and efficiently.
-              </p>
-            }
-          />
-        </Col>
-        <Col>
-          <Comment
-            author={<a>Han Solo</a>}
-            avatar={
-              <Avatar style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
-            }
-            content={
-              <p>
-                We supply a series of design principles, practical patterns and high quality design
-                resources (Sketch and Axure), to help people create their product prototypes beautifully
-                and efficiently.
-              </p>
-            }
-          />
-        </Col>
-        <Col>
-          <Comment
-            author={<a>Han Solo</a>}
-            avatar={
-              <Avatar style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
-            }
-            content={
-              <p>
-                We supply a series of design principles, practical patterns and high quality design
-                resources (Sketch and Axure), to help people create their product prototypes beautifully
-                and efficiently.
-              </p>
-            }
-          />
-        </Col>
-        <Col>
-          <Comment
-            author={<a>Han Solo</a>}
-            avatar={
-              <Avatar style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
-            }
-            content={
-              <p>
-                We supply a series of design principles, practical patterns and high quality design
-                resources (Sketch and Axure), to help people create their product prototypes beautifully
-                and efficiently.
-              </p>
-            }
-          />
-        </Col>
+        {
+          (detail.reviews || []).map(({ user_name, review_comment, date }) => {
+            return (
+              <Col>
+                <Comment
+                  author={<a>{ user_name }</a>}
+                  avatar={
+                    <Avatar style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
+                  }
+                  content={
+                    <p>{ review_comment }</p>
+                  }
+                  datetime={
+                    <Tooltip title={moment(new Date(date)).format('YYYY-MM-DD HH:mm:ss')}>
+                      <span>{moment(new Date(date)).fromNow()}</span>
+                    </Tooltip>
+                  }
+                />
+              </Col>
+            );
+          })
+        }
       </Row>
       <Row>
         <Col span={24}>

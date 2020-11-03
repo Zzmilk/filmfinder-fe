@@ -37,12 +37,12 @@ function logout(props) {
     })
 }
 
-function genRows(allRowData, props, desc, setValue, value) {
+function genRows(allRowData, props, desc) {
 
   return allRowData.map((singleRow, i) => {
     return <Row key={i} justify="space-between" style={{ marginBottom: '16px' }} className="main-list">
       {
-        singleRow.map(({ name, poster, mid, average_rating }) => {
+        singleRow.map(({ name, poster, mid, average_rating, rating }) => {
           return (
             <Col key={mid} onClick={() => props.history.push('/detail')}>
               <Card
@@ -52,8 +52,8 @@ function genRows(allRowData, props, desc, setValue, value) {
               >
                 <div style={{marginBottom: '8px' }}>
                   <span>
-                    <Rate disabled value={desc.indexOf(average_rating) + 1} />
-                    <span className="ant-rate-text">{average_rating}</span>
+                    <Rate disabled value={desc.indexOf(average_rating || rating) + 1} />
+                    <span className="ant-rate-text">{average_rating || rating}</span>
                   </span>
                 </div>
                 <Meta title={name}/>
@@ -67,15 +67,28 @@ function genRows(allRowData, props, desc, setValue, value) {
 }
 
 function App(props) {
-  const onSearch = value => console.log(value);
+  const onSearch = value => {
+    if (value === '') return setSearchValue(!searchValue);
+
+    api.get('/search/', { params: { search: value } })
+      .then(({ data }) => {
+        if (data.success) {
+          setMovies(data.result);
+        } else {
+          message.error(data.msg);
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      })
+  };
   const desc = useMemo(() => [4.6, 4.7, 4.8, 4.9, 5], []);
-  const [value, setValue] = useState(5);
   const [moves, setMovies] = useState([]);
+  const [searchValue, setSearchValue] = useState(false);
 
   useEffect(() => {
     api.get('/movies/')
       .then(({ data }) => {
-        console.log(data);
         if (data.success) {
           setMovies(data.movies);
         } else {
@@ -83,7 +96,7 @@ function App(props) {
         }
       })
       .catch((e) => console.log(e))
-  }, []);
+  }, [searchValue]);
 
   return (
     <>
@@ -109,7 +122,7 @@ function App(props) {
               />
             </Space>
           </Row>
-          { genRows(getSlicedArr(moves), props, desc, setValue, value) }
+          { genRows(getSlicedArr(moves), props, desc) }
         </Content>
         <Footer style={{ textAlign: 'center' }}>FilmFinder ©2020 Created by Zzmilk</Footer>
       </Layout>

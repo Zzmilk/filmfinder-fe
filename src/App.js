@@ -24,36 +24,38 @@ function getSlicedArr(arr, len = 5) {
 }
 
 function genRows(allRowData, props, desc, setValue, value) {
-  return allRowData.map((singleRow) => {
-    return <>
-      <Row key={singleRow} justify="space-between" style={{ marginBottom: '16px' }} className="main-list">
-        {
-          singleRow.map(({ name, poster, mid }) => {
-            return (
-              <Col key={mid} onClick={() => props.history.push('/detail')}>
-                <Card
-                  hoverable
-                  className={styles.wd}
-                  cover={<img alt="example" src={poster} />}
-                >
-                  <div style={{marginBottom: '8px' }}>
-                    <span><Rate tooltips={desc} onChange={setValue} value={value} />{value ? <span className="ant-rate-text">{desc[value - 1]}</span> : ''}</span>
-                  </div>
-                  <Meta title={name}/>
-                </Card>
-              </Col>
-            );
-          })
-        }
-      </Row>
-    </>
+
+  return allRowData.map((singleRow, i) => {
+    return <Row key={i} justify="space-between" style={{ marginBottom: '16px' }} className="main-list">
+      {
+        singleRow.map(({ name, poster, mid, average_rating }) => {
+          return (
+            <Col key={mid} onClick={() => props.history.push('/detail')}>
+              <Card
+                hoverable
+                className={styles.wd}
+                cover={<img alt="example" src={poster} style={{ height: '400px' }}/>}
+              >
+                <div style={{marginBottom: '8px' }}>
+                  <span>
+                    <Rate disabled value={desc.indexOf(average_rating) + 1} />
+                    <span className="ant-rate-text">{average_rating}</span>
+                  </span>
+                </div>
+                <Meta title={name}/>
+              </Card>
+            </Col>
+          );
+        })
+      }
+    </Row>
   });
 }
 
 function App(props) {
   const onSearch = value => console.log(value);
-  const desc = useMemo(() => ['terrible', 'bad', 'normal', 'good', 'wonderful'], []);
-  const [value, setValue] = useState(4);
+  const desc = useMemo(() => [4.6, 4.7, 4.8, 4.9, 5], []);
+  const [value, setValue] = useState(5);
   const [moves, setMovies] = useState([]);
 
   useEffect(() => {
@@ -72,7 +74,13 @@ function App(props) {
   return (
     <>
       <Layout>
-        <Header>Header</Header>
+        <Header>
+          <Row justify="end">
+            <Space>
+
+            </Space>
+          </Row>
+        </Header>
         <Content className={`${styles.contentHeight} ${styles.pd} main-list`}>
           <Row className={styles.mb16} justify="center">
             <Space>

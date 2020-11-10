@@ -41,9 +41,18 @@ function Login(props) {
 
   const [visible, setVisible] = useState(false);
   const [form] = Form.useForm();
-  console.log(form);
   const onFinishRegister = (values) => {
-    console.log(values);
+    api.post('/register/', values)
+      .then(({ data }) => {
+        if (data.success) {
+          message.success('register success');
+        } else {
+          message.error(data.msg);
+        }
+      })
+      .catch((e) => {
+        console.log('Success:', values);
+      });
   };
 
   return (
@@ -121,7 +130,7 @@ function Login(props) {
           </Form.Item>
 
           <Form.Item
-            name="username"
+            name="name"
             label={
               <span>username&nbsp;</span>
             }
@@ -162,7 +171,7 @@ function Login(props) {
           </Form.Item>
 
           <Form.Item
-            name="confirm"
+            name="re_password"
             label="Confirm Password"
             dependencies={['password']}
             hasFeedback

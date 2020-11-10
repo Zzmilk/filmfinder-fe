@@ -20,8 +20,10 @@ const Editor = ({ onChange, onSubmit, submitting, value }) => (
 
 function Detail(props) {
   const [detail, setDetail] = useState({});
+  const [submitting, setSubmitting] = useState(false);
+  const [value, setValue] = useState('');
 
-  useEffect(() => {
+  const getDetail = () => {
     api
       .get('/movies/detail/', { params: { movie_id: props.match.params.mid } })
       .then(({ data }) => {
@@ -34,7 +36,33 @@ function Detail(props) {
       .catch((e) => {
         console.log(e);
       })
-  }, []);
+  };
+
+  useEffect(() => getDetail(), []);
+
+  const handleSubmit = () => {
+    if (!value) return;
+    setSubmitting(true);
+
+    api
+      .post('/movies/detail/new_review/', {
+        movie_id: props.match.params.mid,
+        review_comment: value,
+        rating_number: 5,
+      })
+      .then(({ data }) => {
+        setSubmitting(false);
+        if (data.success) {
+          getDetail();
+        } else {
+          message.error(data.msg);
+        }
+      })
+      .catch((e) => {
+        setSubmitting(false);
+        console.log(e);
+      })
+  };
 
   return <>
     <div style={{ width: '1024px', margin: '0 auto', marginTop: '20px' }}>
@@ -103,10 +131,10 @@ function Detail(props) {
             }
             content={
               <Editor
-                onChange={() => {}}
-                onSubmit={() => {}}
-                submitting={() => {}}
-                value={{}}
+                onChange={(e) => setValue(e.target.value)}
+                onSubmit={handleSubmit}
+                submitting={submitting}
+                value={value}
               />
             }
           />

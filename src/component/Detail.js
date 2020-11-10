@@ -64,6 +64,22 @@ function Detail(props) {
       })
   };
 
+  const addToWishList = () => {
+    api
+      .get('/movies/detail/add_to_wishlist/', { params: { movie_id: props.match.params.mid } })
+      .then(({ data }) => {
+        if (data.success) {
+          message.success(data.msg);
+        } else {
+          message.error(data.msg);
+        }
+      })
+      .catch((e) => {
+        setSubmitting(false);
+        console.log(e);
+      })
+  };
+
   return <>
     <div style={{ width: '1024px', margin: '0 auto', marginTop: '20px' }}>
       <Row>
@@ -78,7 +94,7 @@ function Detail(props) {
             <Descriptions.Item label="Cast">{ (detail.cast || []).join(' , ') }</Descriptions.Item>
             <Descriptions.Item label="Average Rating">{ detail.average_rating }</Descriptions.Item>
             <Descriptions.Item label="">
-              <Button type="primary">Add to Wishlist</Button>
+              <Button type="primary" onClick={addToWishList}>Add to Wishlist</Button>
             </Descriptions.Item>
           </Descriptions>
         </Col>
@@ -100,7 +116,7 @@ function Detail(props) {
         {
           (detail.reviews || []).map(({ user_name, review_comment, date }) => {
             return (
-              <Col>
+              <Col key={user_name}>
                 <Comment
                   author={<a>{ user_name }</a>}
                   avatar={

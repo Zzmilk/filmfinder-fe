@@ -7,6 +7,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Login from './component/Login';
 import Detail from './component/Detail';
 import MyPage from './component/MyPage';
+import BlackList from './component/BlackList';
 import 'antd/dist/antd.css';
 
 ReactDOM.render(
@@ -14,6 +15,7 @@ ReactDOM.render(
     <Switch>
       <Route path="/login" exact={true} component={Login}></Route>
       <Route path="/myPage" exact={true} component={MyPage}></Route>
+      <Route path="/blackList" exact={true} component={BlackList}></Route>
       <Route path="/detail/:mid" exact={true} component={Detail}></Route>
       <Route path="/" exact={true} component={App}></Route>
     </Switch>

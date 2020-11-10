@@ -1,6 +1,7 @@
-import { Card, Form, Input,message, Button } from 'antd';
+import { Card, Form, Input,message, Button, Modal } from 'antd';
 import styles from '../css/login.module.css';
 import api from '../api/index.js';
+import { useState } from 'react';
 
 const layout = {
   labelCol: { span: 7 },
@@ -9,6 +10,18 @@ const layout = {
 const tailLayout = {
   wrapperCol: {  span: 32 },
 };
+
+const formItemLayout = {
+  labelCol: {
+    xs: { span: 24 },
+    sm: { span: 8 },
+  },
+  wrapperCol: {
+    xs: { span: 24 },
+    sm: { span: 16 },
+  },
+};
+
 
 function Login(props) {
   const onFinish = values => {
@@ -24,6 +37,13 @@ function Login(props) {
       .catch((e) => {
         console.log('Success:', values);
       });
+  };
+
+  const [visible, setVisible] = useState(false);
+  const [form] = Form.useForm();
+  console.log(form);
+  const onFinishRegister = (values) => {
+    console.log(values);
   };
 
   return (
@@ -55,9 +75,116 @@ function Login(props) {
             <Button type="primary" htmlType="submit" className={styles.wp100}>
               Login
             </Button>
+            <div style={{ textAlign: 'center' }}>
+              Don't have an account?
+              <Button type="link" htmlType="button" onClick={() => setVisible(true)}>
+                Register
+              </Button>
+            </div>
           </Form.Item>
         </Form>
       </Card>
+
+      <Modal
+        title="Register"
+        visible={visible}
+        onOk={() => form.submit()}
+        onCancel={() => {
+          form.resetFields();
+          setVisible(false);
+        }}
+      >
+        <Form
+          {...formItemLayout}
+          form={form}
+          name="register"
+          onFinish={onFinishRegister}
+          scrollToFirstError
+        >
+          <Form.Item
+            name="firstname"
+            label={
+              <span>firstname&nbsp;</span>
+            }
+            rules={[{ required: true, message: 'Please input your firstname!', whitespace: true }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name="lastname"
+            label={
+              <span>lastname&nbsp;</span>
+            }
+            rules={[{ required: true, message: 'Please input your lastname!', whitespace: true }]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            name="username"
+            label={
+              <span>username&nbsp;</span>
+            }
+            rules={[{ required: true, message: 'Please input your username!', whitespace: true }]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            name="email"
+            label="E-mail"
+            rules={[
+              {
+                type: 'email',
+                message: 'The input is not valid E-mail!',
+              },
+              {
+                required: true,
+                message: 'Please input your E-mail!',
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            name="password"
+            label="Password"
+            rules={[
+              {
+                required: true,
+                message: 'Please input your password!',
+              },
+            ]}
+            hasFeedback
+          >
+            <Input.Password />
+          </Form.Item>
+
+          <Form.Item
+            name="confirm"
+            label="Confirm Password"
+            dependencies={['password']}
+            hasFeedback
+            rules={[
+              {
+                required: true,
+                message: 'Please confirm your password!',
+              },
+              ({ getFieldValue }) => ({
+                validator(rule, value) {
+                  if (!value || getFieldValue('password') === value) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject('The two passwords that you entered do not match!');
+                },
+              }),
+            ]}
+          >
+            <Input.Password />
+          </Form.Item>
+        </Form>
+      </Modal>
     </div>
   );
 }

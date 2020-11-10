@@ -30,13 +30,13 @@ function MyPage(props) {
       <div style={{height: '400px', overflowY: 'auto'}}>
         {
           (userInfo.top_reviews || []).map(({ movie_name, rating_number, review_comment }) => {
-            return <>
+            return <div key={movie_name}>
               <Row>
                 <Col span={8}><b>{ movie_name }</b></Col>
                 <Col span={1} offset={15}><b>{ rating_number }</b></Col>
               </Row>
               <p>{ review_comment }</p>
-            </>
+            </div>
           })
         }
       </div>
@@ -50,17 +50,15 @@ function MyPage(props) {
       <Row justify="space-around" style={{marginBottom: '20px', width: '1024px', overflowX: 'auto'}}>
         {
           (userInfo.wishlist || []).map(({ name, poster = 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png' }) => {
-            return <>
-              <Col>
-                <Card
-                  hoverable
-                  className={styles.wd}
-                  cover={<img alt="example" src={poster}/>}
-                >
-                  <Card.Meta title={name} description=""/>
-                </Card>
-              </Col>
-            </>;
+            return <Col key={name}>
+              <Card
+                hoverable
+                className={styles.wd}
+                cover={<img alt="example" src={poster}/>}
+              >
+                <Card.Meta title={name} description=""/>
+              </Card>
+            </Col>;
           })
         }
       </Row>

@@ -1,9 +1,25 @@
-import React from 'react';
-import { Row, Col, Card } from 'antd';
+import React, { useEffect } from 'react';
+import { Row, Col, Card, message } from 'antd';
 import styles from "../app.module.css";
+import api from "../api";
 
 
 function MyPage(props) {
+
+  useEffect(() => {
+    api
+      .get('/my_page/', {})
+      .then(({ data }) => {
+        if (data.success) {
+          console.log(data);
+        } else {
+          message.error(data.msg);
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      })
+  }, []);
 
   return <>
     <div style={{ width: '1024px', margin: '0 auto', marginTop: '20px' }}>

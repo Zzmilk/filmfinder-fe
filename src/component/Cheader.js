@@ -21,11 +21,11 @@ function logout(props) {
 
 function Cheader({ props }) {
 
-  return <Header>
+  return <Header style={{backgroundImage: 'linear-gradient(50deg, #816EFE,#227DE8)' }}>
     <Row justify="end">
       <Space>
-        <Button type="link" onClick={() => props.history.push('/login')}>Login</Button>
-        <Button type="link" onClick={() => logout(props)}>Logout</Button>
+        <Button type="link" onClick={() => props.history.push('/login')} style={{ color: 'white'}}>Login</Button>
+        <Button type="link" onClick={() => logout(props)} style={{ color: 'white'}}>Logout</Button>
         <a onClick={ () => props.history.push('/myPage')}><Avatar  style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} /></a>
         <span style={{ color: 'white' }}>{(JSON.parse(localStorage.getItem('user')) || {}).username}</span>
       </Space>

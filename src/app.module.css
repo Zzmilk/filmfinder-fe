@@ -15,3 +15,7 @@ div.contentHeight {
 .mb8 {
   margin-bottom: 8px;
 }
+
+.bgMypage {
+  background: url("./img/bj.jpg");
+}

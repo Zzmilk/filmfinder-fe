@@ -95,16 +95,16 @@ function Detail(props) {
 
   return <>
     <Header {...{ props }}></Header>
-    <Breadcrumb style={{ marginLeft: '20px' }}>
-      <Breadcrumb.Item>
-        <a onClick={() => props.history.push('/')}>
-          <HomeOutlined style={{marginRight: '8px'}}/>
-          Home
-       </a>
-      </Breadcrumb.Item>
-      <Breadcrumb.Item>Detail Page</Breadcrumb.Item>
-    </Breadcrumb>
-    <div style={{ width: '1024px', margin: '0 auto', marginTop: '20px' }}>
+    <div style={{ width: '1024px', margin: '0 auto' }}>
+      <Breadcrumb style={{ paddingTop: '8px', paddingBottom: '8px' }}>
+        <Breadcrumb.Item>
+          <a onClick={() => props.history.push('/')}>
+            <HomeOutlined style={{marginRight: '8px'}}/>
+            Home
+          </a>
+        </Breadcrumb.Item>
+        <Breadcrumb.Item>Detail Page</Breadcrumb.Item>
+      </Breadcrumb>
       <Row>
         <Col span={7} flex>
           <img src={detail.poster} alt="" style={{ width: '100%', height: '100%' }}/>

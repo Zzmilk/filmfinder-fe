@@ -10,7 +10,6 @@ const layout = {
 const tailLayout = {
   wrapperCol: {  span: 32 },
 };
-
 const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
@@ -21,7 +20,6 @@ const formItemLayout = {
     sm: { span: 16 },
   },
 };
-
 
 function Login(props) {
   const onFinish = values => {

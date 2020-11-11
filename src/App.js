@@ -4,6 +4,7 @@ import styles from './app.module.css';
 import { useEffect } from "react";
 import api from './api';
 import './css/common.css';
+import Cheader from './component/Cheader';
 
 const { Header, Footer, Content } = Layout;
 const { Meta } = Card;
@@ -21,20 +22,6 @@ function getSlicedArr(arr, len = 5) {
   }
 
   return movies
-}
-
-function logout(props) {
-  api.get('/logout/')
-    .then(({ data }) => {
-      if (data.success) {
-        props.history.push('/login');
-      } else {
-        message.error(data.msg);
-      }
-    })
-    .catch((e) => {
-      console.log(e);
-    })
 }
 
 function genRows(allRowData, props, desc) {
@@ -101,14 +88,7 @@ function App(props) {
   return (
     <>
       <Layout style={{ minWidth: '1590px', }}>
-        <Header>
-          <Row justify="end">
-            <Space>
-              <Button type="link" onClick={() => props.history.push('/login')}>Login</Button>
-              <Button type="link" onClick={() => logout(props)}>Logout</Button>
-            </Space>
-          </Row>
-        </Header>
+        <Cheader {...{ props }}></Cheader>
         <Content className={`${styles.contentHeight} ${styles.pd} main-list`}>
           <Row className={styles.mb16} justify="center">
             <Space>

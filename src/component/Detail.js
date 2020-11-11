@@ -4,7 +4,7 @@ import { UserOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import styles from "../app.module.css";
 import api from '../api';
-
+import Header from './Cheader';
 const Editor = ({ onChange, onSubmit, submitting, value }) => (
   <>
     <Form.Item>
@@ -81,6 +81,7 @@ function Detail(props) {
   };
 
   return <>
+    <Header {...{ props }}></Header>
     <div style={{ width: '1024px', margin: '0 auto', marginTop: '20px' }}>
       <Row>
         <Col span={7} flex>
@@ -99,7 +100,6 @@ function Detail(props) {
           </Descriptions>
         </Col>
       </Row>
-
       <Row>
         <Col span={24}>
           <h1>Description</h1>
@@ -108,7 +108,6 @@ function Detail(props) {
           <p>{ detail.description }</p>
         </Col>
       </Row>
-
       <Row>
         <Col span={24}>
           <h1>Reviews</h1>
@@ -156,7 +155,6 @@ function Detail(props) {
           />
         </Col>
       </Row>
-
       <Row>
         <Col span={24}>
           <h1>Similar Movies</h1>

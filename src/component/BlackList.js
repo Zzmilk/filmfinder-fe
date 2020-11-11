@@ -1,6 +1,7 @@
 import { List, Avatar, message, Button } from 'antd';
 import { useEffect, useState } from "react";
 import api from "../api";
+import Header from './Cheader';
 
 const data = [
   {
@@ -54,24 +55,27 @@ function BlackList(props) {
   useEffect(() => getBanList(), []);
 
   return (
-    <div style={{ width: '1024px', margin: '0 auto', marginTop: '20px' }}>
-      <h1>My BlackList</h1>
-      <List
-        itemLayout="horizontal"
-        dataSource={data}
-        renderItem={item => (
-          <List.Item
-            actions={[<Button key="list-loadmore-edit" onClick={removeBlack}>Remove</Button>]}
-          >
-            <List.Item.Meta
-              avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-              title={<a href="https://ant.design">{item.title}</a>}
-              description="Ant Design, a design language for background applications, is refined by Ant UED Team"
-            />
-          </List.Item>
-        )}
-      />
-    </div>
+    <>
+      <Header {...{ props }}></Header>
+      <div style={{ width: '1024px', margin: '0 auto', marginTop: '20px' }}>
+        <h1>My BlackList</h1>
+        <List
+          itemLayout="horizontal"
+          dataSource={data}
+          renderItem={item => (
+            <List.Item
+              actions={[<Button key="list-loadmore-edit" onClick={removeBlack}>Remove</Button>]}
+            >
+              <List.Item.Meta
+                avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
+                title={<a href="https://ant.design">{item.title}</a>}
+                description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+              />
+            </List.Item>
+          )}
+        />
+      </div>
+    </>
   );
 }
 export default BlackList;

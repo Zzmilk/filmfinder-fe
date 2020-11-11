@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Row, Col, Card, message } from 'antd';
 import styles from "../app.module.css";
 import api from "../api";
-
+import Header from './Cheader';
 
 function MyPage(props) {
 
@@ -24,6 +24,7 @@ function MyPage(props) {
   }, []);
 
   return <>
+    <Header {...{ props }}></Header>
     <div style={{ width: '1024px', margin: '0 auto', marginTop: '20px' }}>
       <h1>{ userInfo.username }</h1>
       <h2>Reviews</h2>

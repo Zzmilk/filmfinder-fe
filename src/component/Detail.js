@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Descriptions, Row, Col, Comment, Button, Avatar, Card, Form, Input, message, Tooltip } from 'antd';
+import { Descriptions, Row, Col, Comment, Button, Avatar, Card, Form, Input, message, Tooltip, Breadcrumb } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import styles from "../app.module.css";
 import api from '../api';
 import Header from './Cheader';
+import { HomeOutlined } from '@ant-design/icons';
+
 const Editor = ({ onChange, onSubmit, submitting, value }) => (
   <>
     <Form.Item>
@@ -20,6 +22,7 @@ const Editor = ({ onChange, onSubmit, submitting, value }) => (
 
 function Detail(props) {
   const [detail, setDetail] = useState({});
+  const [similar, setSimilar] = useState([]);
   const [submitting, setSubmitting] = useState(false);
   const [value, setValue] = useState('');
 
@@ -29,6 +32,7 @@ function Detail(props) {
       .then(({ data }) => {
         if (data.success) {
           setDetail(data.movie[0]);
+          setSimilar(data.similar_movies);
         } else {
           message.error(data.msg);
         }
@@ -80,8 +84,25 @@ function Detail(props) {
       })
   };
 
+  const gotoBlack = (props, user_name, user_id) => {
+    if (user_id === JSON.parse((localStorage.getItem('user') || {})).user_id) {
+      return message.error('Can\'t go to othersPage! It it yourself account!');
+    }
+
+    props.history.push(`/othersPage/${user_name}/${user_id}`);
+  };
+
   return <>
     <Header {...{ props }}></Header>
+    <Breadcrumb style={{ marginLeft: '20px' }}>
+      <Breadcrumb.Item>
+        <a onClick={() => props.history.push('/')}>
+          <HomeOutlined style={{marginRight: '8px'}}/>
+          Home
+       </a>
+      </Breadcrumb.Item>
+      <Breadcrumb.Item>Detail Page</Breadcrumb.Item>
+    </Breadcrumb>
     <div style={{ width: '1024px', margin: '0 auto', marginTop: '20px' }}>
       <Row>
         <Col span={7} flex>
@@ -113,11 +134,11 @@ function Detail(props) {
           <h1>Reviews</h1>
         </Col>
         {
-          (detail.reviews || []).map(({ user_name, review_comment, date }) => {
+          (detail.reviews || []).map(({ user_name, review_comment, date, user_id }) => {
             return (
               <Col key={user_name}>
                 <Comment
-                  author={<a onClick={() => props.history.push('/othersPage/'+ user_name)}>{ user_name }</a>}
+                  author={<a onClick={() => gotoBlack(props, user_name, user_id)}>{ user_name }</a>}
                   avatar={
                     <Avatar style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
                   }
@@ -160,34 +181,23 @@ function Detail(props) {
           <h1>Similar Movies</h1>
         </Col>
       </Row>
-      <Row justify="space-between" style={{ marginBottom: '16px' }}>
-        <Col>
-          <Card
-            hoverable
-            className={styles.wd}
-            cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"/>}
-          >
-            <Card.Meta title="Europe Street beat" description="www.instagram.com"/>
-          </Card>
-        </Col>
-        <Col>
-          <Card
-            hoverable
-            className={styles.wd}
-            cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"/>}
-          >
-            <Card.Meta title="Europe Street beat" description="www.instagram.com"/>
-          </Card>
-        </Col>
-        <Col>
-          <Card
-            hoverable
-            className={styles.wd}
-            cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"/>}
-          >
-            <Card.Meta title="Europe Street beat" description="www.instagram.com"/>
-          </Card>
-        </Col>
+      <Row justify="space-between" style={{ marginBottom: '16px', maxHeight: '600px', overflowY: 'auto' }}>
+        {
+          similar.map(({ poster, name, mid }) => {
+            return (
+              <Col key={mid}>
+                <Card
+                  hoverable
+                  className={styles.wd}
+                  cover={<img alt="example" src={poster}/>}
+                >
+                  <Card.Meta title={name} description=""/>
+                </Card>
+              </Col>
+            );
+          })
+        }
+
       </Row>
     </div>
   </>

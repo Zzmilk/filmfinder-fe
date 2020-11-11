@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Row, Col, Card, message, Button } from 'antd';
+import { Row, Col, Card, message, Button, Breadcrumb } from 'antd';
 import styles from "../app.module.css";
 import api from "../api";
 import Header from './Cheader';
+import { HomeOutlined } from '@ant-design/icons';
 
 function OthersPage(props) {
 
@@ -40,6 +41,15 @@ function OthersPage(props) {
 
   return <>
     <Header {...{ props }}></Header>
+    <Breadcrumb style={{ marginLeft: '20px' }}>
+      <Breadcrumb.Item>
+        <a onClick={() => props.history.push('/')}>
+          <HomeOutlined style={{marginRight: '8px'}}/>
+          Home
+        </a>
+      </Breadcrumb.Item>
+      <Breadcrumb.Item>Others Page</Breadcrumb.Item>
+    </Breadcrumb>
     <div style={{ width: '1024px', margin: '0 auto', marginTop: '20px' }}>
       <h1>
         <span>{ userInfo.username }</span>

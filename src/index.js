@@ -15,7 +15,7 @@ ReactDOM.render(
     <Switch>
       <Route path="/login" exact={true} component={Login}></Route>
       <Route path="/myPage" exact={true} component={MyPage}></Route>
-      <Route path="/othersPage/:username" exact={true} component={OthersPage}></Route>
+      <Route path="/othersPage/:username/:banned_user_id" exact={true} component={OthersPage}></Route>
       <Route path="/blackList" exact={true} component={BlackList}></Route>
       <Route path="/detail/:mid" exact={true} component={Detail}></Route>
       <Route path="/" exact={true} component={App}></Route>

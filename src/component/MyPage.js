@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Row, Col, Card, message, Button,Breadcrumb } from 'antd';
+import { Row, Col, Card, message, Button,Breadcrumb, Empty } from 'antd';
 import styles from "../app.module.css";
 import api from "../api";
 import Header from './Cheader';
@@ -46,7 +46,7 @@ function MyPage(props) {
         <Button type="link" onClick={() => gotoMyBlackList(props)}>My BlackList</Button>
       </h1>
       <h2>Reviews</h2>
-      <div style={{height: '400px', overflowY: 'auto'}}>
+      <div style={{maxHeight: '400px', overflowY: 'auto'}}>
         {
           (userInfo.top_reviews || []).map(({ movie_name, rating_number, review_comment }) => {
             return <div key={movie_name}>
@@ -59,7 +59,6 @@ function MyPage(props) {
           })
         }
       </div>
-
 
       <Row>
         <Col span={8}><h1>WatchList</h1></Col>
@@ -79,6 +78,9 @@ function MyPage(props) {
               </Card>
             </Col>;
           })
+        }
+        {
+          (userInfo.top_reviews || []).length && <Empty />
         }
       </Row>
     </div>

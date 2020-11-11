@@ -1,4 +1,4 @@
-import { Layout, Input, Space, Card, Row, Col, Rate, Button, message, Breadcrumb } from "antd";
+import { Layout, Input, Space, Card, Row, Col, Rate, Button, message, Spin } from "antd";
 import { useState, useMemo } from 'react';
 import styles from './app.module.css';
 import { useEffect } from "react";
@@ -57,8 +57,10 @@ function App(props) {
   const onSearch = value => {
     if (value === '') return setSearchValue(!searchValue);
 
+    setSpinning(true);
     api.get('/search/', { params: { search: value } })
       .then(({ data }) => {
+        setSpinning(false);
         if (data.success) {
           setMovies(data.result);
         } else {
@@ -66,43 +68,52 @@ function App(props) {
         }
       })
       .catch((e) => {
+        setSpinning(false);
         console.log(e);
       })
   };
   const desc = useMemo(() => [4.6, 4.7, 4.8, 4.9, 5], []);
   const [moves, setMovies] = useState([]);
   const [searchValue, setSearchValue] = useState(false);
+  const [spinning, setSpinning] = useState(true);
 
   useEffect(() => {
+    setSpinning(true);
     api.get('/movies/')
       .then(({ data }) => {
+        setSpinning(false);
         if (data.success) {
           setMovies(data.movies);
         } else {
           message.error(data.msg);
         }
       })
-      .catch((e) => console.log(e))
+      .catch((e) => {
+        setSpinning(false);
+        console.log(e)
+      });
   }, [searchValue]);
 
   return (
     <>
       <Layout style={{ minWidth: '1590px', }}>
         <Cheader {...{ props }}></Cheader>
-        <Content className={`${styles.contentHeight} ${styles.pd} main-list`}>
-          <Row className={styles.mb16} justify="center">
-            <Space>
-              <Input.Search
-                placeholder="input movie name, description, or genre..."
-                allowClear
-                enterButton="Search"
-                size="large"
-                onSearch={onSearch}
-                style={{width: '600px'}}
-              />
-            </Space>
-          </Row>
-          { genRows(getSlicedArr(moves), props, desc) }
+        <Content className={`${styles.contentHeight} ${styles.pd} main-list`} style={{minHeight: 'calc(100vh - 134px)'}}>
+          <Spin tip="Loading..." spinning={spinning}>
+            <Row className={styles.mb16} justify="center">
+              <Space>
+                <Input.Search
+                  placeholder="input movie name, description, or genre..."
+                  allowClear
+                  enterButton="Search"
+                  size="large"
+                  onSearch={onSearch}
+                  style={{width: '600px'}}
+                />
+              </Space>
+            </Row>
+            { genRows(getSlicedArr(moves), props, desc) }
+          </Spin>
         </Content>
         <Footer style={{ textAlign: 'center' }}>FilmFinder ©2020 Created by Zzmilk</Footer>
       </Layout>

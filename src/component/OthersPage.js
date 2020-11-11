@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Row, Col, Card, message, Button, Breadcrumb } from 'antd';
+import { Row, Col, Card, message, Button, Breadcrumb, Empty } from 'antd';
 import styles from "../app.module.css";
 import api from "../api";
 import Header from './Cheader';
@@ -56,7 +56,7 @@ function OthersPage(props) {
         <Button type="link" onClick={() => addToBlackList()}>Add To BlackList</Button>
       </h1>
       <h2>Reviews</h2>
-      <div style={{height: '400px', overflowY: 'auto'}}>
+      <div style={{maxHeight: '400px', overflowY: 'auto'}}>
         {
           (userInfo.top_reviews || []).map(({ movie_name, rating_number, review_comment }) => {
             return <div key={movie_name}>
@@ -89,6 +89,9 @@ function OthersPage(props) {
               </Card>
             </Col>;
           })
+        }
+        {
+          (userInfo.wishlist || []).length === 0 && <Empty />
         }
       </Row>
     </div>

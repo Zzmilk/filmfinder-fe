@@ -1,4 +1,4 @@
-.contentHeight {
+div.contentHeight {
   min-height: calc(100vh - 134px);
 }
 .pd {

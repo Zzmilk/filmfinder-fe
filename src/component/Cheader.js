@@ -27,7 +27,7 @@ function Cheader({ props }) {
         <Button type="link" onClick={() => props.history.push('/login')}>Login</Button>
         <Button type="link" onClick={() => logout(props)}>Logout</Button>
         <a onClick={ () => props.history.push('/myPage')}><Avatar  style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} /></a>
-        <span style={{ color: 'white' }}>{JSON.parse(localStorage.getItem('user')).username}</span>
+        <span style={{ color: 'white' }}>{(JSON.parse(localStorage.getItem('user')) || {}).username}</span>
       </Space>
     </Row>
   </Header>

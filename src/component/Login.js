@@ -27,7 +27,6 @@ function Login(props) {
   const onFinish = values => {
     api.post('/login/', values)
       .then(({ data }) => {
-        console.log(data);
         if (data.success) {
           props.history.push('/');
           localStorage.clear();
@@ -47,6 +46,7 @@ function Login(props) {
     api.post('/register/', values)
       .then(({ data }) => {
         if (data.success) {
+          setVisible(false);
           message.success('register success');
         } else {
           message.error(data.msg);

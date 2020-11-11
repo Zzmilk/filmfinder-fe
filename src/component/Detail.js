@@ -58,6 +58,7 @@ function Detail(props) {
         setSubmitting(false);
         if (data.success) {
           getDetail();
+          setValue('');
         } else {
           message.error(data.msg);
         }

@@ -5,22 +5,6 @@ import Header from './Cheader';
 import React from "react";
 import { HomeOutlined } from '@ant-design/icons';
 
-const data = [
-  {
-    title: 'Ant Design Title 1',
-  },
-  {
-    title: 'Ant Design Title 2',
-  },
-  {
-    title: 'Ant Design Title 3',
-  },
-  {
-    title: 'Ant Design Title 4',
-  },
-];
-
-
 function BlackList(props) {
   const [list, setList] = useState([]);
 

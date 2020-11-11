@@ -8,6 +8,7 @@ function logout(props) {
   api.get('/logout/')
     .then(({ data }) => {
       if (data.success) {
+        localStorage.clear();
         props.history.push('/login');
       } else {
         message.error(data.msg);

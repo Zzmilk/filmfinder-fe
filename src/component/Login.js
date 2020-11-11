@@ -30,6 +30,8 @@ function Login(props) {
         console.log(data);
         if (data.success) {
           props.history.push('/');
+          localStorage.clear();
+          localStorage.setItem('user', JSON.stringify(data));
         } else {
           message.error(data.msg);
         }

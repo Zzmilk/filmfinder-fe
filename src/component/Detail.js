@@ -117,7 +117,7 @@ function Detail(props) {
             return (
               <Col key={user_name}>
                 <Comment
-                  author={<a>{ user_name }</a>}
+                  author={<a onClick={() => props.history.push('/othersPage/'+ user_name)}>{ user_name }</a>}
                   avatar={
                     <Avatar style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
                   }

@@ -6,7 +6,10 @@ import styles from "../app.module.css";
 import api from '../api';
 import Header from './Cheader';
 import { HomeOutlined } from '@ant-design/icons';
+// 点击电影后进入的详情页面
 
+
+// 这是评论的组件
 const Editor = ({ onChange, onSubmit, submitting, value }) => (
   <>
     <Form.Item>

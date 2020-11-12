@@ -2,7 +2,7 @@ import { Card, Form, Input,message, Button, Modal } from 'antd';
 import styles from '../css/login.module.css';
 import api from '../api/index.js';
 import { useState } from 'react';
-
+// 登录组件，处理登录，注册的
 const layout = {
   labelCol: { span: 7 },
   wrapperCol: { span: 25 },

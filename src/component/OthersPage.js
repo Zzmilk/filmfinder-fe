@@ -4,7 +4,7 @@ import styles from "../app.module.css";
 import api from "../api";
 import Header from './Cheader';
 import { HomeOutlined } from '@ant-design/icons';
-
+// 其他用户的个人详情页面
 function OthersPage(props) {
 
   const [userInfo, setUserInfo] = useState({});
@@ -104,6 +104,5 @@ function OthersPage(props) {
     </div>
   </>
 }
-
 
 export default OthersPage;

@@ -1,7 +1,7 @@
 import { Button, Layout, message, Row, Space, Avatar } from "antd";
 import { UserOutlined } from '@ant-design/icons';
 import api from "../api";
-
+// 由于很多页面都有共有的Header，单独抽离出了一个公共组件，复用头部导航条
 const { Header } = Layout;
 
 function logout(props) {

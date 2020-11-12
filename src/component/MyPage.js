@@ -5,6 +5,12 @@ import api from "../api";
 import Header from './Cheader';
 import { HomeOutlined } from '@ant-design/icons';
 
+/**
+ * myPage component
+ * @param props
+ * @returns {*}
+ * @constructor
+ */
 function MyPage(props) {
 
   const [userInfo, setUserInfo] = useState({});

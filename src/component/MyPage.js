@@ -86,7 +86,7 @@ function MyPage(props) {
                 })
               }
               {
-                (userInfo.top_reviews || []).length && <Empty />
+                (userInfo.wishlist || []).length === 0 && <Empty />
               }
             </Row>
           </div>

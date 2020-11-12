@@ -4,6 +4,7 @@ import api from "../api";
 import Header from './Cheader';
 import React from "react";
 import { HomeOutlined } from '@ant-design/icons';
+import styles from "../app.module.css";
 
 function BlackList(props) {
   const [list, setList] = useState([]);
@@ -43,31 +44,38 @@ function BlackList(props) {
   return (
     <>
       <Header {...{ props }}></Header>
-      <Breadcrumb style={{ marginLeft: '20px' }}>
-        <Breadcrumb.Item>
-          <a onClick={() => props.history.push('/')}>
-            <HomeOutlined style={{marginRight: '8px'}}/>
-            Home
-          </a>
-        </Breadcrumb.Item>
-        <Breadcrumb.Item>My BlackList</Breadcrumb.Item>
-      </Breadcrumb>
-      <div style={{ width: '1024px', margin: '0 auto', marginTop: '20px' }}>
-        <h1>My BlackList</h1>
-        <List
-          itemLayout="horizontal"
-          dataSource={list.bannedlist}
-          renderItem={item => (
-            <List.Item
-              actions={[<Button key="list-loadmore-edit" onClick={() => removeBlack(item.uid)}>Remove</Button>]}
-            >
-              <List.Item.Meta
-                avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                title={<a href="https://ant.design">{item.name}</a>}
-              />
-            </List.Item>
-          )}
-        />
+      <div className={styles.bgMypage} style={{ minHeight: 'calc(100vh - 64px)' }}>
+        <div style={{
+          width: '1040px', margin: '0 auto',
+          opacity: '0.9',padding: '16px',boxShadow: '-2px 2px 11px #999999',
+          background: 'white', minHeight: 'calc(100vh - 64px)' }}>
+          <Breadcrumb>
+            <Breadcrumb.Item>
+              <a onClick={() => props.history.push('/')}>
+                <HomeOutlined style={{marginRight: '8px'}}/>
+                Home
+              </a>
+            </Breadcrumb.Item>
+            <Breadcrumb.Item>My BlackList</Breadcrumb.Item>
+          </Breadcrumb>
+          <div style={{ width: '1024px', margin: '0 auto', marginTop: '20px' }}>
+            <h1>My BlackList</h1>
+            <List
+              itemLayout="horizontal"
+              dataSource={list.bannedlist}
+              renderItem={item => (
+                <List.Item
+                  actions={[<Button key="list-loadmore-edit" onClick={() => removeBlack(item.uid)}>Remove</Button>]}
+                >
+                  <List.Item.Meta
+                    avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
+                    title={<a href="https://ant.design">{item.name}</a>}
+                  />
+                </List.Item>
+              )}
+            />
+          </div>
+        </div>
       </div>
     </>
   );

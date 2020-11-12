@@ -9,6 +9,12 @@ import Cheader from './component/Cheader';
 const { Header, Footer, Content } = Layout;
 const { Meta } = Card;
 
+/**
+ * 切割电影数组为二维数组，方便生成ui的时候遍历
+ * @param arr
+ * @param len
+ * @returns {Array}
+ */
 function getSlicedArr(arr, len = 5) {
   let movies = [];
 

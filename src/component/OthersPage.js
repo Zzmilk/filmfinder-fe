@@ -88,7 +88,7 @@ function OthersPage(props) {
                   <Card
                     hoverable
                     className={styles.wd}
-                    cover={<img alt="example" src={poster}/>}
+                    cover={<img alt="example" src={poster.replace('..', '')}/>}
                   >
                     <Card.Meta title={name} description=""/>
                   </Card>

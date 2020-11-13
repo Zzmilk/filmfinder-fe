@@ -83,9 +83,12 @@ function OthersPage(props) {
 
           <Row justify="space-around" style={{marginBottom: '20px', width: '1024px', overflowX: 'auto'}}>
             {
-              (userInfo.wishlist || []).map(({ name, poster = 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png' }) => {
+              (userInfo.wishlist || []).map(({ name, mid, poster = 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png' }) => {
                 return <Col key={name}>
                   <Card
+                    onClick={() => {
+                      props.history.push('/detail/' + mid);
+                    }}
                     hoverable
                     className={styles.wd}
                     cover={<img alt="example" src={poster.replace('..', '')}/>}

@@ -66,7 +66,7 @@ function getSlicedArr(arr, len = 5) {
 function genRows(allRowData, props, desc) {
 
   return allRowData.map((singleRow, i) => {
-    return <Row key={i} justify="space-between" style={{ marginBottom: '16px' }} className="main-list">
+    return <Row key={i} style={{ marginBottom: '16px' }} className="main-list" gutter={[20,20]}>
       {
         singleRow.map(({ name, poster, mid, average_rating, rating }) => {
           return (
